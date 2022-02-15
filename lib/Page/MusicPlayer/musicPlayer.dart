@@ -1,33 +1,23 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:music_player_tutorial/Page/Home_page/homePage.dart';
 import 'package:music_player_tutorial/database.dart';
-import 'package:music_player_tutorial/homePage.dart';
 
-class MusicPlayer extends StatefulWidget {
+class MusicPlayer extends StatelessWidget {
   final Song song;
   MusicPlayer(this.song);
 
   @override
-  _MusicPlayerState createState() => _MusicPlayerState();
-}
-
-double currentSlider = 0;
-
-class _MusicPlayerState extends State<MusicPlayer> {
-  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Hero(
-          tag: "image",
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(widget.song.image), fit: BoxFit.cover)),
-          ),
+        Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(song.image), fit: BoxFit.cover)),
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
@@ -35,21 +25,20 @@ class _MusicPlayerState extends State<MusicPlayer> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             actions: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Hello, Pathway",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text("India", style: TextStyle(fontSize: 10))
-                ],
-              ),
               Padding(
-                padding: EdgeInsets.only(right: 8, left: 15),
-                child: Icon(Icons.notifications_active_outlined, size: 30),
-              )
+                padding: EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Hello, Pathway",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text("India", style: TextStyle(fontSize: 10))
+                  ],
+                ),
+              ),
             ],
           ),
           body: Align(
@@ -86,24 +75,19 @@ class _MusicPlayerState extends State<MusicPlayer> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                widget.song.name,
+                                song.name,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Icon(
-                                Icons.add,
-                                color: Colors.white,
-                                size: 40,
-                              )
                             ],
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: 20),
                           child: Text(
-                            widget.song.singer,
+                            song.singer,
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -117,13 +101,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
                                 trackHeight: 6),
                             child: Slider(
                               value: currentSlider,
-                              max: widget.song.duration.toDouble(),
+                              max: song.duration.toDouble(),
                               min: 0,
                               inactiveColor: Colors.white70,
                               activeColor: Colors.red,
                               onChanged: (val) {
                                 currentSlider = val;
-                                setState(() {});
                               },
                             ),
                           ),
@@ -141,7 +124,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               Text(
-                                Duration(seconds: widget.song.duration.toInt())
+                                Duration(seconds: song.duration.toInt())
                                     .toString()
                                     .split('.')[0]
                                     .substring(2),
@@ -163,17 +146,6 @@ class _MusicPlayerState extends State<MusicPlayer> {
                                 color: Colors.white, size: 40)
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(Icons.replay_outlined,
-                                  color: Colors.white, size: 40),
-                              Icon(Icons.shuffle, color: Colors.white, size: 40)
-                            ],
-                          ),
-                        )
                       ],
                     ),
                   ),
