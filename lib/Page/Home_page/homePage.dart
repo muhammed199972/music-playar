@@ -85,10 +85,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: PlayerHome(currentSong),
-            // )
           ],
         ),
       ),
