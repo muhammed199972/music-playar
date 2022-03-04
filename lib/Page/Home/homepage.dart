@@ -2,6 +2,8 @@ import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_music_player/Page/Home/components/ListSonde.dart';
+import 'package:flutter_music_player/Page/Home/components/Lists_of_songs.dart';
+import 'package:flutter_music_player/Page/Home/components/card_large.dart';
 import 'package:flutter_music_player/widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -48,58 +50,140 @@ class _HomePage extends State<HomePage> {
     });
   }
 
+  List<SongInfo> songInfo = [];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF192647),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            height: 600.h,
-            child: FutureBuilder(
-              future: FlutterAudioQuery()
-                  //.getAlbums(),
-                  .getSongs(sortType: SongSortType.RECENT_YEAR),
-              builder: (context, snapshot) {
-                print('llllllllllllllllllllllllllll');
-                print(snapshot.data);
-                print('llllllllllllllllllllllllllll');
-
-                List<SongInfo> songInfo = snapshot.data;
-                if (snapshot.hasData)
-                  return Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ListSonde(songList: songInfo),
-                  );
-                return Container(
-                  height: 90.h,
-                  child: Center(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xFF192647),
+        body: Stack(children: [
+          SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 20.w, bottom: 10.h),
+                  child: Text(
+                    "Hello Der",
+                    style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    "what you want to hear today ?",
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Container(
+                    height: 50.h,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF1C2C53),
+                      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                    ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        CircularProgressIndicator(),
-                        SizedBox(
-                          width: 20.w,
+                      children: [
+                        Expanded(
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
                         ),
-                        Text(
-                          "Loading....",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Expanded(
+                          flex: 4,
+                          child: Text(
+                            'Search in music',
+                            style: TextStyle(color: Colors.grey, fontSize: 18),
+                          ),
                         )
                       ],
                     ),
                   ),
-                );
-              },
+                  //  TextField(decoration: InputDecoration(labelText: 'Search',fillColor: Colors.orange,focusColor:  Colors.orange),)
+                ),
+                Container(
+                  height: 55.h,
+                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                  child: ListsOfSongs(),
+                ),
+                Container(
+                  height: 190.h,
+                  child: CardLarge(),
+                ),
+                Container(
+                  height: 32.h,
+                  padding: EdgeInsets.only(left: 25.w, top: 10.h),
+                  child: Text(
+                    'My Music',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+                Container(
+                  height: 360.h,
+                  child: FutureBuilder(
+                    future: FlutterAudioQuery()
+                        //.getAlbums(),
+                        .getSongs(sortType: SongSortType.RECENT_YEAR),
+                    builder: (context, snapshot) {
+                      songInfo = snapshot.data;
+                      if (snapshot.hasData)
+                        return Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: ListSonde(songList: songInfo),
+                        );
+                      return Container(
+                        height: 90.h,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CircularProgressIndicator(),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Text(
+                                "Loading....",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
-          bottomPanel(),
-        ],
+          Positioned(
+              bottom: 0,
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: Color(0xFF192647),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.r),
+                          topRight: Radius.circular(25.r))),
+                  height: 112.h,
+                  width: 380.w,
+                  padding: EdgeInsets.only(top: 20.h),
+                  child: bottomPanel())),
+        ]),
       ),
     );
   }
 
   Widget songProgress(BuildContext context) {
-    TextStyle style = TextStyle(color: Colors.black);
+    TextStyle style = TextStyle(color: Colors.white);
     return Row(
       children: <Widget>[
         Text(
@@ -111,18 +195,18 @@ class _HomePage extends State<HomePage> {
             padding: EdgeInsets.symmetric(horizontal: 5.w),
             child: SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                  trackHeight: 2.h,
-                  thumbColor: Colors.blueAccent,
-                  overlayColor: Colors.blue,
+                  trackHeight: 8.h,
+                  thumbColor: Color(0xFFC906BF),
+                  overlayColor: Color(0xFFC906BF),
                   thumbShape: RoundSliderThumbShape(
-                    disabledThumbRadius: 5.r,
-                    enabledThumbRadius: 5.r,
+                    disabledThumbRadius: 15.r,
+                    enabledThumbRadius: 10.r,
                   ),
                   overlayShape: RoundSliderOverlayShape(
                     overlayRadius: 10,
                   ),
-                  activeTrackColor: Colors.blueAccent,
-                  inactiveTrackColor: Colors.grey,
+                  activeTrackColor: Color(0xFFC906BF),
+                  inactiveTrackColor: Color(0xFF1C2C53),
                 ),
                 child: Slider(
                   value: _slider ?? 0,
@@ -163,27 +247,40 @@ class _HomePage extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            CircleAvatar(
-              child: Center(
-                child: IconButton(
-                    icon: Icon(
-                      Icons.skip_previous,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => audioManagerInstance.previous()),
-              ),
-              backgroundColor: Colors.cyan.withOpacity(0.3),
+            Center(
+              child: IconButton(
+                  icon: Icon(
+                    Icons.skip_previous,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    play - 1 < 0 ? play = songInfo.length - 1 : play = play - 1;
+                    audioManagerInstance.previous();
+                  }),
             ),
-            CircleAvatar(
-              backgroundColor: Colors.blue,
-              radius: 30,
-              child: Center(
+            Container(
+              height: 50.h,
+              width: 45.w,
+              decoration: BoxDecoration(
+                color: Color(0xFFC906BF),
+                borderRadius: BorderRadius.all(Radius.circular(100.r)),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(100.r)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.white.withOpacity(0.3),
+                        spreadRadius: 0,
+                        blurRadius: 2,
+                        offset: Offset(-1, 0)),
+                  ],
+                ),
                 child: IconButton(
                   color: Colors.blue,
                   onPressed: () async {
                     audioManagerInstance.playOrPause();
                   },
-                  padding: const EdgeInsets.all(0.0),
                   icon: Icon(
                     audioManagerInstance.isPlaying
                         ? Icons.pause
@@ -193,16 +290,35 @@ class _HomePage extends State<HomePage> {
                 ),
               ),
             ),
-            CircleAvatar(
-              backgroundColor: Colors.cyan.withOpacity(0.3),
-              child: Center(
-                child: IconButton(
-                    icon: Icon(
-                      Icons.skip_next,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => audioManagerInstance.next()),
-              ),
+            // CircleAvatar(
+            //   backgroundColor: Colors.blue,
+            //   radius: 30,
+            //   child: Center(
+            //     child: IconButton(
+            //       color: Colors.blue,
+            //       onPressed: () async {
+            //         audioManagerInstance.playOrPause();
+            //       },
+            //       padding: const EdgeInsets.all(0.0),
+            //       icon: Icon(
+            //         audioManagerInstance.isPlaying
+            //             ? Icons.pause
+            //             : Icons.play_arrow,
+            //         color: Colors.white,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            Center(
+              child: IconButton(
+                  icon: Icon(
+                    Icons.skip_next,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    songInfo.length - 1 < play + 1 ? play = 0 : play = play + 1;
+                    audioManagerInstance.next();
+                  }),
             ),
           ],
         ),

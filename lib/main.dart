@@ -3,13 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_music_player/Page/Home/homepage.dart';
+import 'package:flutter_music_player/Page/Navbar/navbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   runApp(MyApp());
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark));
+      statusBarColor: Color(0xFF192647),
+      statusBarIconBrightness: Brightness.light));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +24,9 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(
-                primarySwatch: Colors.yellow,
+                colorScheme: ColorScheme.fromSwatch().copyWith(
+                  secondary: Colors.pink[700], // Your accent color
+                ),
               ),
               builder: (context, widget) {
                 ScreenUtil.setContext(context);
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
                   child: widget,
                 );
               },
-              home: HomePage(),
+              home: navbar(),
             ));
   }
 }
