@@ -13,7 +13,7 @@ class Song {
       required this.duration,
       required this.color});
 }
-
+List<String> song_lists = ["mostPopular","newRelease","recommendation"];
 List<Song> mostPopular = [
   Song(
       name: "like it doesn't hurt",
