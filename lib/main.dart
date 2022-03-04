@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_music_player/Home/homepage.dart';
+import 'package:flutter_music_player/Page/Home/homepage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {

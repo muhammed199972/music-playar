@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
-import 'package:flutter_music_player/Home/homepage.dart';
-import 'package:flutter_music_player/widget.dart';
+import 'package:flutter_music_player/Page/Home/homepage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 int play = 10000000;

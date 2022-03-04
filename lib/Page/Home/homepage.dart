@@ -1,7 +1,7 @@
 import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
-import 'package:flutter_music_player/Home/components/ListSonde.dart';
+import 'package:flutter_music_player/Page/Home/components/ListSonde.dart';
 import 'package:flutter_music_player/widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
