@@ -35,6 +35,7 @@ dependencies:
   flutter_audio_query:
   bot_toast:
   audio_manager:
+  shared_preferences: ^2.0.5
   
 
 

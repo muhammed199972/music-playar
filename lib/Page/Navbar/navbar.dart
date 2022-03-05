@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music_player/Page/Home/homepage.dart';
+import 'package:flutter_music_player/Page/Search/search.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
 
 class navbar extends StatefulWidget {
@@ -41,7 +42,7 @@ class _navbar extends State<navbar> {
       bottomNavigationBar: SlidingClippedNavBar(
         backgroundColor: Color(0xFF192647),
         onButtonPressed: onButtonPressed,
-        iconSize: 30,
+        iconSize: 32,
         activeColor: Color(0xFFC906BF),
         inactiveColor: Color(0xFFC906BF),
         selectedIndex: selectedIndex,
@@ -56,7 +57,7 @@ class _navbar extends State<navbar> {
           ),
           BarItem(
             icon: Icons.favorite,
-            title: 'Energy',
+            title: 'Favorite',
           ),
           BarItem(
             icon: Icons.tune_rounded,
@@ -73,13 +74,8 @@ class _navbar extends State<navbar> {
 
 List<Widget> _listOfWidget = <Widget>[
   HomePage(),
-  Container(
-    alignment: Alignment.center,
-    child: const Icon(
-      Icons.search,
-      size: 56,
-      color: Colors.brown,
-    ),
+  SearchAllPage(
+    songList: [],
   ),
   Container(
     alignment: Alignment.center,

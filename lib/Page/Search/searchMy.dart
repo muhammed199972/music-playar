@@ -2,22 +2,22 @@ import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_music_player/Page/Home/components/ListSonde.dart';
-import 'package:flutter_music_player/Page/Home/components/Lists_of_songs.dart';
-import 'package:flutter_music_player/Page/Home/components/card_large.dart';
-import 'package:flutter_music_player/Page/Search/searchMy.dart';
-import 'package:flutter_music_player/helper/constant.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomePage extends StatefulWidget {
+class SearchPage extends StatefulWidget {
+  final List<SongInfo> songList;
+  SearchPage({@required this.songList});
   @override
-  _HomePage createState() => _HomePage();
+  _SearchPage createState() => _SearchPage();
 }
 
-class _HomePage extends State<HomePage> {
+class _SearchPage extends State<SearchPage> {
+  List<SongInfo> songInfo = [];
+
   @override
   void initState() {
+    songInfo = widget.songList;
     super.initState();
-    getpref();
     setupAudio();
   }
 
@@ -52,128 +52,88 @@ class _HomePage extends State<HomePage> {
     });
   }
 
-  List<SongInfo> songInfo = [];
+  bool isData(String value) {
+    var data = widget.songList
+        .where((element) => (element.title.contains(value)))
+        .toList();
+    if (data.length >= 1) {
+      songInfo = [];
+      setState(() {
+        for (int j = 0; j < data.length; j++) {
+          for (int i = 0; i < widget.songList.length; i++) {
+            if (data[j].id == widget.songList[i].id) {
+              songInfo.add(widget.songList[i]);
+            }
+          }
+        }
+      });
+    } else {
+      setState(() {
+        songInfo = [];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(songInfo.length);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFF192647),
         body: Stack(children: [
-          SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: ListView(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w, bottom: 10.h),
-                  child: Text(
-                    "Hello Der",
-                    style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+          Positioned(
+            top: 0.h,
+            child: Container(
+              padding: EdgeInsets.all(20),
+              height: 100.h,
+              width: 377.w,
+              child: TextField(
+                onChanged: (e) {
+                  setState(() {
+                    isData(e);
+                  });
+                },
+                autofocus: false,
+                style: TextStyle(fontSize: 22.0, color: Colors.white),
+                decoration: InputDecoration(
+                  filled: true,
+                  icon: Icon(
+                    Icons.search,
+                    size: 24,
+                    color: Colors.white,
+                  ),
+                  fillColor: Color(0xFF263E7C),
+                  hintText: 'Search',
+                  hintStyle: TextStyle(color: Colors.white),
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF263E7C)),
+                    borderRadius: BorderRadius.circular(12.7),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF263E7C)),
+                    borderRadius: BorderRadius.circular(12.7),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Text(
-                    "what you want to hear today ?",
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return SearchPage(
-                        songList: songInfo,
-                      );
-                    }));
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Container(
-                      height: 50.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF263E7C),
-                        borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Icon(
-                              Icons.search,
-                              size: 24,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                              'Search in music',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    //  TextField(decoration: InputDecoration(labelText: 'Search',fillColor: Colors.orange,focusColor:  Colors.orange),)
-                  ),
-                ),
-                Container(
-                  height: 55.h,
-                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                  child: ListsOfSongs(),
-                ),
-                Container(
-                  height: 32.h,
-                  padding: EdgeInsets.only(left: 25.w, top: 10.h),
-                  child: Text(
-                    'My Music',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-                Container(
-                  height: 360.h,
-                  child: FutureBuilder(
-                    future: FlutterAudioQuery()
-                        //.getAlbums(),
-                        .getSongs(sortType: SongSortType.RECENT_YEAR),
-                    builder: (context, snapshot) {
-                      songInfo = snapshot.data;
-                      if (snapshot.hasData)
-                        return Padding(
+              ),
+            ),
+          ),
+          Positioned(
+            top: 80.h,
+            child: SizedBox(
+                height: 700.h,
+                width: 377.w,
+                child: ListView(
+                  children: <Widget>[
+                    Container(
+                        height: 360.h,
+                        child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ListSonde(songList: songInfo),
-                        );
-                      return Container(
-                        height: 90.h,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              CircularProgressIndicator(),
-                              SizedBox(
-                                width: 20.w,
-                              ),
-                              Text(
-                                "Loading....",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+                        ))
+                  ],
+                )),
           ),
           Positioned(
               bottom: 0,
@@ -183,7 +143,7 @@ class _HomePage extends State<HomePage> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.r),
                           topRight: Radius.circular(25.r))),
-                  height: 127.h,
+                  height: 112.h,
                   width: 380.w,
                   padding: EdgeInsets.only(top: 20.h),
                   child: bottomPanel())),
@@ -216,7 +176,7 @@ class _HomePage extends State<HomePage> {
                     overlayRadius: 10,
                   ),
                   activeTrackColor: Color(0xFFC906BF),
-                  inactiveTrackColor: Color(0xFF263E7C),
+                  inactiveTrackColor: Color(0xFF1C2C53),
                 ),
                 child: Slider(
                   value: _slider ?? 0,
@@ -269,8 +229,8 @@ class _HomePage extends State<HomePage> {
                   }),
             ),
             Container(
-              height: 65.h,
-              width: 60.w,
+              height: 50.h,
+              width: 45.w,
               decoration: BoxDecoration(
                 color: Color(0xFFC906BF),
                 borderRadius: BorderRadius.all(Radius.circular(100.r)),

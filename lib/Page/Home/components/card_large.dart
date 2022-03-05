@@ -2,7 +2,14 @@ import 'dart:ui';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
-class CardLarge extends StatelessWidget {
+class CardLarge extends StatefulWidget {
+  var listitems;
+  CardLarge(this.listitems);
+  @override
+  _CardLarge createState() => _CardLarge();
+}
+
+class _CardLarge extends State<CardLarge> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
