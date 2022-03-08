@@ -2,6 +2,7 @@ import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_music_player/Page/Home/components/ListSonde.dart';
+import 'package:flutter_music_player/helper/constant.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -10,12 +11,17 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePage extends State<FavoritePage> {
-  List<SongInfo> songInfo = [];
-
   @override
   void initState() {
     super.initState();
     setupAudio();
+    for (int i = 0; i < fav.length; i++) {
+      for (int j = 0; j < songInfo.length; j++) {
+        if (fav[i] == songInfo[j].title.toString()) {
+          favoritelist.add(songInfo[j]);
+        }
+      }
+    }
   }
 
   void setupAudio() {
@@ -49,6 +55,7 @@ class _FavoritePage extends State<FavoritePage> {
     });
   }
 
+  List<SongInfo> favoritelist = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,9 +63,20 @@ class _FavoritePage extends State<FavoritePage> {
         backgroundColor: Color(0xFF192647),
         body: Stack(children: [
           Positioned(
-            top: 80.h,
+            top: 10.h,
+            left: 20.w,
+            child: Text(
+              "Favorite",
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
+            ),
+          ),
+          Positioned(
+            top: 50.h,
             child: SizedBox(
-                height: 700.h,
+                height: 1000.h,
                 width: 377.w,
                 child: ListView(
                   children: <Widget>[
@@ -66,7 +84,7 @@ class _FavoritePage extends State<FavoritePage> {
                         height: 360.h,
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: ListSonde(songList: songInfo),
+                          child: ListSonde(songList: favoritelist),
                         ))
                   ],
                 )),

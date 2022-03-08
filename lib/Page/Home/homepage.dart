@@ -52,8 +52,6 @@ class _HomePage extends State<HomePage> {
     });
   }
 
-  List<SongInfo> songInfo = [];
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -68,7 +66,7 @@ class _HomePage extends State<HomePage> {
                 Padding(
                   padding: EdgeInsets.only(left: 20.w, bottom: 10.h),
                   child: Text(
-                    "Hello Der",
+                    "Hello Dear",
                     style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -123,8 +121,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 Container(
-                  height: 55.h,
-                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                  height: 233.h,
                   child: ListsOfSongs(),
                 ),
                 Container(
@@ -138,39 +135,41 @@ class _HomePage extends State<HomePage> {
                         color: Colors.white),
                   ),
                 ),
-                Container(
-                  height: 360.h,
-                  child: FutureBuilder(
-                    future: FlutterAudioQuery()
-                        //.getAlbums(),
-                        .getSongs(sortType: SongSortType.RECENT_YEAR),
-                    builder: (context, snapshot) {
-                      songInfo = snapshot.data;
-                      if (snapshot.hasData)
-                        return Padding(
+                FutureBuilder(
+                  future: FlutterAudioQuery()
+                      //.getAlbums(),
+                      .getSongs(sortType: SongSortType.RECENT_YEAR),
+                  builder: (context, snapshot) {
+                    songInfo = snapshot.data;
+                    if (snapshot.hasData)
+                      return Container(
+                        height: songInfo.length * 80.toDouble(),
+                        child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ListSonde(songList: songInfo),
-                        );
-                      return Container(
-                        height: 90.h,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              CircularProgressIndicator(),
-                              SizedBox(
-                                width: 20.w,
-                              ),
-                              Text(
-                                "Loading....",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
                         ),
                       );
-                    },
-                  ),
+                    return Container(
+                      height: 90.h,
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Text(
+                              "Loading....",
+                              style: TextStyle(
+                                  color: Color(0xFF263E7C),
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

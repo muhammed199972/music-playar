@@ -1,19 +1,26 @@
+import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List fav = [];
+List<SongInfo> songInfo = [];
+
 savepref(String name) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   fav = await preferences.getStringList("Favorite");
+  if (fav == null) {
+    fav = [];
+  }
   fav.add(name);
-  await preferences.setStringList("Favorite", []);
+  await preferences.setStringList("Favorite", fav);
+  getpref();
 }
 
 getpref() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  try {
-    fav = await preferences.getStringList("Favorite");
-    print(';;;;;;;;;;;;;;;;;;;;');
-  } catch (e) {}
+  fav = await preferences.getStringList("Favorite");
+  if (fav == null) {
+    fav = [];
+  }
 }
 
 deletepref(String name) async {

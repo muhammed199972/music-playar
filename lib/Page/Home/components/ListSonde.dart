@@ -25,13 +25,21 @@ class _ListSonde extends State<ListSonde> {
           SongInfo song = widget.songList[songIndex];
           String format = (int.parse(song.duration) / 65170).toString();
           var formattime = format.split('.');
-          var data = fav.where((element) => (element(song.title.contains)));
           bool favorite = false;
-          if (data.length > 1) {
-            favorite = true;
+          for (int i = 0; i < fav.length; i++) {
+            if (fav[i] == song.title.toString()) {
+              favorite = true;
+            }
           }
+          var nameartist = song.artist.length < 12
+              ? song.artist.substring(0, song.artist.length)
+              : song.artist.substring(0, 12) + '...';
+          var namesong = song.title.length < 9
+              ? song.title.substring(0, song.title.length)
+              : song.title.substring(0, 9) + '...';
+
           return Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: EdgeInsets.only(bottom: 8.h),
             child: Container(
                 width: 350.w,
                 decoration: BoxDecoration(
@@ -57,65 +65,66 @@ class _ListSonde extends State<ListSonde> {
                         height: 80,
                         width: 80,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 120.w,
-                            child: Text(
-                              song.title,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w800),
-                            ),
-                          ),
-                          Text(
-                            "Artist ${song.artist}",
-                            style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Row(children: [
-                            play == songIndex
-                                ? Text(
-                                    formatDuration(
-                                            audioManagerInstance.position) +
-                                        ' /',
-                                    style: TextStyle(color: Colors.grey),
-                                  )
-                                : Text(
-                                    '00:00 /',
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                            SizedBox(
-                              width: 5.h,
+                      Padding(
+                        padding: EdgeInsets.only(top: 6.h),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 120.w,
+                              child: Text(
+                                namesong,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w800),
+                              ),
                             ),
                             Text(
-                              formattime[0].length > 1
-                                  ? "${formattime[0]}:${formattime[1].substring(0, 2)}"
-                                  : "0${formattime[0]}:${formattime[1].substring(0, 2)}",
-                              style: TextStyle(color: Color(0xFFC906BF)),
+                              "Artist ${nameartist}",
+                              style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500),
                             ),
-                          ]),
-                        ],
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            Row(children: [
+                              play == songIndex
+                                  ? Text(
+                                      formatDuration(
+                                              audioManagerInstance.position) +
+                                          ' /',
+                                      style: TextStyle(color: Colors.grey),
+                                    )
+                                  : Text(
+                                      '00:00 /',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                              SizedBox(
+                                width: 5.h,
+                              ),
+                              Text(
+                                formattime[0].length > 1
+                                    ? "${formattime[0]}:${formattime[1].substring(0, 2)}"
+                                    : "0${formattime[0]}:${formattime[1].substring(0, 2)}",
+                                style: TextStyle(color: Color(0xFFC906BF)),
+                              ),
+                            ]),
+                          ],
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 20.h),
                         child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (!favorite) {
-                                savepref(song.title);
-                                favorite = true;
+                              if (favorite) {
+                                deletepref(song.title.toString());
                               } else {
-                                deletepref(song.title);
-                                favorite = false;
+                                savepref(song.title.toString());
                               }
                             });
                           },
@@ -127,7 +136,7 @@ class _ListSonde extends State<ListSonde> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100.r)),
                             ),
-                            child: play == songIndex && favorite
+                            child: favorite
                                 ? Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(

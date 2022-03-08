@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
                   child: widget,
                 );
               },
-              home: navbar(),
+              home: Navbar(0, 0),
             ));
   }
 }
