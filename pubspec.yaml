@@ -38,6 +38,11 @@ dependencies:
   audio_manager:
   rolling_nav_bar:
   shared_preferences: ^2.0.5
+  permission_handler:
+  path:
+  assets_audio_player:
+  intl:
+  flutter_sound: 
   
 
 
