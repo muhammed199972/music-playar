@@ -40,9 +40,9 @@ dependencies:
   shared_preferences: ^2.0.5
   permission_handler:
   path:
-  assets_audio_player:
+  assets_audio_player: ^3.0.3+3
   intl:
-  flutter_sound: 
+  flutter_sound: ^8.1.9
   
 
 
