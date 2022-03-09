@@ -10,10 +10,10 @@ class ListsOfSongs extends StatefulWidget {
 
 class _ListsOfSongsState extends State<ListsOfSongs> {
   List<String> songListsItem = [
-    'albom',
+    'album',
     "recommendation",
-    "mostPopular",
-    "newRelease",
+    "most popular",
+    "new release",
   ];
   int currlist = 0;
   var songLists;

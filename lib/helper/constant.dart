@@ -1,7 +1,7 @@
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-List fav = [];
+List<String> fav = [];
 List<SongInfo> songInfo = [];
 
 savepref(String name) async {
@@ -10,6 +10,7 @@ savepref(String name) async {
   if (fav == null) {
     fav = [];
   }
+  print(name);
   fav.add(name);
   await preferences.setStringList("Favorite", fav);
   getpref();

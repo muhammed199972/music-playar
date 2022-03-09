@@ -26,6 +26,7 @@ class _ListSonde extends State<ListSonde> {
           String format = (int.parse(song.duration) / 65170).toString();
           var formattime = format.split('.');
           bool favorite = false;
+
           for (int i = 0; i < fav.length; i++) {
             if (fav[i] == song.title.toString()) {
               favorite = true;

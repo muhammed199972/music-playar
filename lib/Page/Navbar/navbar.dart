@@ -56,6 +56,7 @@ import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_player/Page/Favorite/favorite.dart';
 import 'package:flutter_music_player/Page/Home/homepage.dart';
+import 'package:flutter_music_player/Page/Record/recordpage.dart';
 import 'package:flutter_music_player/Page/Search/search.dart';
 
 class Navbar extends StatefulWidget {
@@ -80,14 +81,7 @@ class _Navbar extends State<Navbar> with TickerProviderStateMixin {
       songList: [],
     ),
     FavoritePage(),
-    Container(
-      alignment: Alignment.center,
-      child: const Icon(
-        Icons.tune_rounded,
-        size: 56,
-        color: Colors.brown,
-      ),
-    ),
+    Recorder()
   ];
   @override
   Widget build(BuildContext context) {
