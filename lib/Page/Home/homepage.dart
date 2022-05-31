@@ -82,12 +82,13 @@ class _HomePage extends State<HomePage> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return SearchPage(
-                        songList: songInfo,
-                      );
-                    }));
+                    if (songInfo.isNotEmpty)
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return SearchPage(
+                          songList: songInfo,
+                        );
+                      }));
                   },
                   child: Padding(
                     padding: EdgeInsets.all(20),
