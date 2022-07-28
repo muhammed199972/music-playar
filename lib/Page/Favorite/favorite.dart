@@ -63,8 +63,8 @@ class _FavoritePage extends State<FavoritePage> {
         backgroundColor: Color(0xFF192647),
         body: Stack(children: [
           Positioned(
-            top: 10.h,
-            left: 20.w,
+            top: 10,
+            left: 20,
             child: Text(
               "Favorite",
               style: TextStyle(
@@ -74,14 +74,14 @@ class _FavoritePage extends State<FavoritePage> {
             ),
           ),
           Positioned(
-            top: 50.h,
+            top: 50,
             child: SizedBox(
-                height: 1000.h,
-                width: 377.w,
+                height: 1000,
+                width: 377,
                 child: ListView(
                   children: <Widget>[
                     Container(
-                        height: 360.h,
+                        height: 360,
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ListSonde(songList: favoritelist),
@@ -97,9 +97,9 @@ class _FavoritePage extends State<FavoritePage> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.r),
                           topRight: Radius.circular(25.r))),
-                  height: 112.h,
+                  height: 127.h,
                   width: 380.w,
-                  padding: EdgeInsets.only(top: 20.h),
+                  padding: EdgeInsets.only(top: 20),
                   child: bottomPanel())),
         ]),
       ),
@@ -116,21 +116,21 @@ class _FavoritePage extends State<FavoritePage> {
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            padding: EdgeInsets.symmetric(horizontal: 5),
             child: SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                  trackHeight: 8.h,
+                  trackHeight: 8,
                   thumbColor: Color(0xFFC906BF),
                   overlayColor: Color(0xFFC906BF),
                   thumbShape: RoundSliderThumbShape(
-                    disabledThumbRadius: 15.r,
-                    enabledThumbRadius: 10.r,
+                    disabledThumbRadius: 15,
+                    enabledThumbRadius: 10,
                   ),
                   overlayShape: RoundSliderOverlayShape(
                     overlayRadius: 10,
                   ),
                   activeTrackColor: Color(0xFFC906BF),
-                  inactiveTrackColor: Color(0xFF1C2C53),
+                  inactiveTrackColor: Color(0xFF263E7C),
                 ),
                 child: Slider(
                   value: _slider ?? 0,
@@ -183,8 +183,8 @@ class _FavoritePage extends State<FavoritePage> {
                   }),
             ),
             Container(
-              height: 50.h,
-              width: 45.w,
+              height: 65.h,
+              width: 60.w,
               decoration: BoxDecoration(
                 color: Color(0xFFC906BF),
                 borderRadius: BorderRadius.all(Radius.circular(100.r)),

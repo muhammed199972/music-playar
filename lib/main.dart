@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_music_player/Page/Navbar/navbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() async {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Color(0xFF192647),
       statusBarIconBrightness: Brightness.light));

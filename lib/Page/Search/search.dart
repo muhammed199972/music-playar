@@ -5,20 +5,28 @@ import 'package:flutter_music_player/Page/Home/components/ListSonde.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchAllPage extends StatefulWidget {
-  final List<SongInfo> songList;
-  SearchAllPage({@required this.songList});
+  SearchAllPage();
   @override
-  _SearchAllPage createState() => _SearchAllPage();
+  _SearchPage createState() => _SearchPage();
 }
 
-class _SearchAllPage extends State<SearchAllPage> {
-  List<SongInfo> songInfo = [];
+List<SongInfo> songInfo1 = [];
+List<SongInfo> songInfo = [];
 
+class _SearchPage extends State<SearchAllPage> {
   @override
   void initState() {
-    songInfo = widget.songList;
     super.initState();
+    getsonge();
     setupAudio();
+  }
+
+  getsonge() async {
+    var nn = await FlutterAudioQuery()
+        //.getAlbums(),
+        .getSongs(sortType: SongSortType.RECENT_YEAR);
+    songInfo = nn;
+    songInfo1 = nn;
   }
 
   void setupAudio() {
@@ -53,16 +61,15 @@ class _SearchAllPage extends State<SearchAllPage> {
   }
 
   bool isData(String value) {
-    var data = widget.songList
-        .where((element) => (element.title.contains(value)))
-        .toList();
+    var data =
+        songInfo1.where((element) => (element.title.contains(value))).toList();
     if (data.length >= 1) {
       songInfo = [];
       setState(() {
         for (int j = 0; j < data.length; j++) {
-          for (int i = 0; i < widget.songList.length; i++) {
-            if (data[j].id == widget.songList[i].id) {
-              songInfo.add(widget.songList[i]);
+          for (int i = 0; i < songInfo1.length; i++) {
+            if (data[j].id == songInfo1[i].id) {
+              songInfo.add(songInfo1[i]);
             }
           }
         }
@@ -76,7 +83,6 @@ class _SearchAllPage extends State<SearchAllPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(songInfo.length);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFF192647),
@@ -127,7 +133,9 @@ class _SearchAllPage extends State<SearchAllPage> {
                 child: ListView(
                   children: <Widget>[
                     Container(
-                        height: 360.h,
+                        height: songInfo.length > 10
+                            ? songInfo.length * 118.toDouble()
+                            : songInfo.length * 140.toDouble(),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ListSonde(songList: songInfo),
@@ -143,7 +151,7 @@ class _SearchAllPage extends State<SearchAllPage> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.r),
                           topRight: Radius.circular(25.r))),
-                  height: 112.h,
+                  height: 127.h,
                   width: 380.w,
                   padding: EdgeInsets.only(top: 20.h),
                   child: bottomPanel())),
@@ -162,21 +170,21 @@ class _SearchAllPage extends State<SearchAllPage> {
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            padding: EdgeInsets.symmetric(horizontal: 5),
             child: SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                  trackHeight: 8.h,
+                  trackHeight: 8,
                   thumbColor: Color(0xFFC906BF),
                   overlayColor: Color(0xFFC906BF),
                   thumbShape: RoundSliderThumbShape(
-                    disabledThumbRadius: 15.r,
-                    enabledThumbRadius: 10.r,
+                    disabledThumbRadius: 15,
+                    enabledThumbRadius: 10,
                   ),
                   overlayShape: RoundSliderOverlayShape(
                     overlayRadius: 10,
                   ),
                   activeTrackColor: Color(0xFFC906BF),
-                  inactiveTrackColor: Color(0xFF1C2C53),
+                  inactiveTrackColor: Color(0xFF263E7C),
                 ),
                 child: Slider(
                   value: _slider ?? 0,
@@ -229,8 +237,8 @@ class _SearchAllPage extends State<SearchAllPage> {
                   }),
             ),
             Container(
-              height: 50.h,
-              width: 45.w,
+              height: 65.h,
+              width: 60.w,
               decoration: BoxDecoration(
                 color: Color(0xFFC906BF),
                 borderRadius: BorderRadius.all(Radius.circular(100.r)),

@@ -121,10 +121,10 @@ class _HomePage extends State<HomePage> {
                     //  TextField(decoration: InputDecoration(labelText: 'Search',fillColor: Colors.orange,focusColor:  Colors.orange),)
                   ),
                 ),
-                Container(
-                  height: 233.h,
-                  child: ListsOfSongs(),
-                ),
+                // Container(
+                //   height: 233.h,
+                //   child: ListsOfSongs(),
+                // ),
                 Container(
                   height: 32.h,
                   padding: EdgeInsets.only(left: 25.w, top: 10.h),
@@ -144,7 +144,7 @@ class _HomePage extends State<HomePage> {
                     songInfo = snapshot.data;
                     if (snapshot.hasData)
                       return Container(
-                        height: songInfo.length * 80.toDouble(),
+                        height: songInfo.length * 116.toDouble(),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ListSonde(songList: songInfo),

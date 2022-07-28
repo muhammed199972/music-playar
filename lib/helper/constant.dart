@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 List<String> fav = [];
 List<SongInfo> songInfo = [];
+List<SongInfo> searchSong = [];
 
 savepref(String name) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();

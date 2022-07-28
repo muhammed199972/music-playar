@@ -76,7 +76,6 @@ class _SearchPage extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(songInfo.length);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFF192647),
@@ -127,7 +126,9 @@ class _SearchPage extends State<SearchPage> {
                 child: ListView(
                   children: <Widget>[
                     Container(
-                        height: songInfo.length * 80.toDouble(),
+                        height: songInfo.length > 10
+                            ? songInfo.length * 118.toDouble()
+                            : songInfo.length * 140.toDouble(),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ListSonde(songList: songInfo),
@@ -143,7 +144,7 @@ class _SearchPage extends State<SearchPage> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(25.r),
                           topRight: Radius.circular(25.r))),
-                  height: 112.h,
+                  height: 127.h,
                   width: 380.w,
                   padding: EdgeInsets.only(top: 20.h),
                   child: bottomPanel())),
@@ -162,21 +163,21 @@ class _SearchPage extends State<SearchPage> {
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            padding: EdgeInsets.symmetric(horizontal: 5),
             child: SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                  trackHeight: 8.h,
+                  trackHeight: 8,
                   thumbColor: Color(0xFFC906BF),
                   overlayColor: Color(0xFFC906BF),
                   thumbShape: RoundSliderThumbShape(
-                    disabledThumbRadius: 15.r,
-                    enabledThumbRadius: 10.r,
+                    disabledThumbRadius: 15,
+                    enabledThumbRadius: 10,
                   ),
                   overlayShape: RoundSliderOverlayShape(
                     overlayRadius: 10,
                   ),
                   activeTrackColor: Color(0xFFC906BF),
-                  inactiveTrackColor: Color(0xFF1C2C53),
+                  inactiveTrackColor: Color(0xFF263E7C),
                 ),
                 child: Slider(
                   value: _slider ?? 0,
@@ -229,8 +230,8 @@ class _SearchPage extends State<SearchPage> {
                   }),
             ),
             Container(
-              height: 50.h,
-              width: 45.w,
+              height: 65.h,
+              width: 60.w,
               decoration: BoxDecoration(
                 color: Color(0xFFC906BF),
                 borderRadius: BorderRadius.all(Radius.circular(100.r)),

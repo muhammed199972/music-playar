@@ -56,6 +56,7 @@ import 'package:bottom_bar_page_transition/bottom_bar_page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_player/Page/Favorite/favorite.dart';
 import 'package:flutter_music_player/Page/Home/homepage.dart';
+import 'package:flutter_music_player/Page/Record/recorder.dart';
 import 'package:flutter_music_player/Page/Record/recordpage.dart';
 import 'package:flutter_music_player/Page/Search/search.dart';
 
@@ -75,14 +76,7 @@ class _Navbar extends State<Navbar> with TickerProviderStateMixin {
     super.initState();
   }
 
-  var page = [
-    HomePage(),
-    SearchAllPage(
-      songList: [],
-    ),
-    FavoritePage(),
-    Recorder()
-  ];
+  var page = [HomePage(), SearchAllPage(), FavoritePage(), Recorder()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
