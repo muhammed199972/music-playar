@@ -133,9 +133,7 @@ class _SearchPage extends State<SearchAllPage> {
                 child: ListView(
                   children: <Widget>[
                     Container(
-                        height: songInfo.length > 10
-                            ? songInfo.length * 118.toDouble()
-                            : songInfo.length * 140.toDouble(),
+                        height: songInfo.length * (100.h).toDouble() + 150.h,
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ListSonde(songList: songInfo),

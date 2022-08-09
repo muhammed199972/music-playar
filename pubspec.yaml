@@ -40,7 +40,8 @@ dependencies:
   web_socket_channel:
   sound_stream:
   permission_handler:
-  
+  url_launcher:
+
 
 dev_dependencies:
   flutter_test:

@@ -43,6 +43,7 @@ class _ListSonde extends State<ListSonde> {
             padding: EdgeInsets.only(bottom: 8.h),
             child: Container(
                 width: 350.w,
+                height: 100.h,
                 decoration: BoxDecoration(
                   color: Color(0xFF263E7C),
                   borderRadius: BorderRadius.all(Radius.circular(10.r)),
@@ -63,11 +64,11 @@ class _ListSonde extends State<ListSonde> {
                                   new AssetImage('assets/image/icon_music.jpg'),
                               fit: BoxFit.fill,
                             )),
-                        height: 80,
-                        width: 80,
+                        height: 80.h,
+                        width: 80.w,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 6.h),
+                        padding: EdgeInsets.only(top: 5.h),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,8 +131,8 @@ class _ListSonde extends State<ListSonde> {
                             });
                           },
                           child: Container(
-                            height: 40,
-                            width: 40,
+                            height: 40.h,
+                            width: 40.w,
                             decoration: BoxDecoration(
                               color: Color(0xFFC906BF),
                               borderRadius:
@@ -194,8 +195,8 @@ class _ListSonde extends State<ListSonde> {
                             });
                           },
                           child: Container(
-                            height: 40,
-                            width: 40,
+                            height: 40.h,
+                            width: 40.w,
                             decoration: BoxDecoration(
                               color: Color(0xFFC906BF),
                               borderRadius:

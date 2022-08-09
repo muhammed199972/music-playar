@@ -59,6 +59,7 @@ import 'package:flutter_music_player/Page/Home/homepage.dart';
 import 'package:flutter_music_player/Page/Record/recorder.dart';
 import 'package:flutter_music_player/Page/Record/recordpage.dart';
 import 'package:flutter_music_player/Page/Search/search.dart';
+import 'package:flutter_music_player/helper/constant.dart';
 
 class Navbar extends StatefulWidget {
   int _currentPage = 0;
@@ -74,6 +75,11 @@ class _Navbar extends State<Navbar> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    getpref();
+    getprefHistoryName();
+    getprefHistoryImage();
+    getprefHistoryAr();
   }
 
   var page = [HomePage(), SearchAllPage(), FavoritePage(), Recorder()];

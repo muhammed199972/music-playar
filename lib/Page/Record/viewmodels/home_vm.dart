@@ -4,6 +4,7 @@ import 'package:flutter_music_player/Page/Record/services/models/deezer_song_mod
 import 'package:flutter_music_player/Page/Record/services/song_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+
 class HomeViewModel extends ChangeNotifier {
   HomeViewModel() {
     initAcr();
@@ -13,7 +14,6 @@ class HomeViewModel extends ChangeNotifier {
   DeezerSongModel currentSong;
   bool isRecognizing = false;
   bool success = false;
-
   Future<void> initAcr() async {
     try {
       acr
@@ -25,7 +25,8 @@ class HomeViewModel extends ChangeNotifier {
         )
         ..songModelStream.listen(searchSong);
     } catch (e) {
-      print(e.toString());
+   
+      print(e.noSuchMethod());
     }
   }
 

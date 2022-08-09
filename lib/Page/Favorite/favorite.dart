@@ -73,34 +73,50 @@ class _FavoritePage extends State<FavoritePage> {
                   color: Colors.white),
             ),
           ),
-          Positioned(
-            top: 50,
-            child: SizedBox(
-                height: 1000,
-                width: 377,
-                child: ListView(
-                  children: <Widget>[
-                    Container(
-                        height: 360,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: ListSonde(songList: favoritelist),
-                        ))
-                  ],
-                )),
-          ),
-          Positioned(
-              bottom: 0,
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xFF192647),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25.r),
-                          topRight: Radius.circular(25.r))),
-                  height: 127.h,
-                  width: 380.w,
-                  padding: EdgeInsets.only(top: 20),
-                  child: bottomPanel())),
+          if (favoritelist.isEmpty)
+            Padding(
+              padding: EdgeInsets.only(top: 100.0.h, left: 20.w, right: 20.w),
+              child: Center(
+                child: Text(
+                  "There are no items in the favorite",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+              ),
+            ),
+          if (favoritelist.isNotEmpty)
+            Positioned(
+              top: 50,
+              child: SizedBox(
+                  height: songInfo.length * (100.h).toDouble(),
+                  width: 377.w,
+                  child: ListView(
+                    children: <Widget>[
+                      Container(
+                          height: songInfo.length * (100.h).toDouble(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: ListSonde(songList: favoritelist),
+                          ))
+                    ],
+                  )),
+            ),
+          if (favoritelist.isNotEmpty)
+            Positioned(
+                bottom: 0,
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Color(0xFF192647),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.r),
+                            topRight: Radius.circular(25.r))),
+                    height: 127.h,
+                    width: 380.w,
+                    padding: EdgeInsets.only(top: 20),
+                    child: bottomPanel())),
         ]),
       ),
     );

@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:audio_manager/audio_manager.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:flutter_music_player/Page/History/history.dart';
 import 'package:flutter_music_player/Page/Home/components/ListSonde.dart';
 import 'package:flutter_music_player/Page/Home/components/Lists_of_songs.dart';
-import 'package:flutter_music_player/Page/Home/components/card_large.dart';
+import 'package:flutter_music_player/Page/Home/modelRe.dart';
 import 'package:flutter_music_player/Page/Search/searchMy.dart';
 import 'package:flutter_music_player/helper/constant.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,10 +19,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+  Re ListRe;
+  bool isLoding = true;
+  SongReService() async {
+    Dio _dio;
+    BaseOptions options = BaseOptions(baseUrl: 'http://207.154.248.155:5000/');
+    _dio = Dio(options);
+    try {
+      if (historyName.isNotEmpty) {
+        final response = await _dio.get(
+          'search?q=${historyName.toString().length > 29 ? historyName.toString().substring(1, 30) : historyName.toString()}&n_song=25',
+        );
+        var tt = json.decode(response.data);
+        print(tt);
+        Re result = Re.fromJson(tt);
+        setState(() {
+          ListRe = result;
+        });
+      } else {
+        setState(() {
+          isLoding = false;
+        });
+      }
+    } on DioError catch (e) {
+      if (e.request != null) {
+        throw 'An error has occured';
+      } else {
+        print(e.error);
+        throw e.error;
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    getpref();
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      SongReService();
+    });
+
     setupAudio();
   }
 
@@ -63,15 +103,34 @@ class _HomePage extends State<HomePage> {
             width: double.infinity,
             child: ListView(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w, bottom: 10.h),
-                  child: Text(
-                    "Hello Dear",
-                    style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.w, bottom: 10.h),
+                      child: Text(
+                        "Hello Dear",
+                        style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HistoryPage()),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 20.w, bottom: 10.h),
+                        child: Icon(
+                          Icons.history,
+                          color: Colors.white,
+                          size: 30.h,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 20),
@@ -121,10 +180,48 @@ class _HomePage extends State<HomePage> {
                     //  TextField(decoration: InputDecoration(labelText: 'Search',fillColor: Colors.orange,focusColor:  Colors.orange),)
                   ),
                 ),
-                // Container(
-                //   height: 233.h,
-                //   child: ListsOfSongs(),
-                // ),
+                if (ListRe != null)
+                  if (isLoding)
+                    Container(
+                      height: 32.h,
+                      padding: EdgeInsets.only(left: 25.w, top: 10.h),
+                      child: Text(
+                        'Recommendation',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                isLoding
+                    ? ListRe != null
+                        ? Container(
+                            height: 300.h,
+                            child: ListsOfSongs(
+                              ListRe: ListRe,
+                            ),
+                          )
+                        : Container(
+                            height: 90.h,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  CircularProgressIndicator(),
+                                  SizedBox(
+                                    width: 20.w,
+                                  ),
+                                  Text(
+                                    "Loading....",
+                                    style: TextStyle(
+                                        color: Color(0xFF263E7C),
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                    : Container(),
                 Container(
                   height: 32.h,
                   padding: EdgeInsets.only(left: 25.w, top: 10.h),
@@ -144,7 +241,7 @@ class _HomePage extends State<HomePage> {
                     songInfo = snapshot.data;
                     if (snapshot.hasData)
                       return Container(
-                        height: songInfo.length * 116.toDouble(),
+                        height: songInfo.length * (100.h).toDouble() + 100.h,
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: ListSonde(songList: songInfo),
@@ -171,6 +268,9 @@ class _HomePage extends State<HomePage> {
                       ),
                     );
                   },
+                ),
+                Container(
+                  height: 125.h,
                 ),
               ],
             ),

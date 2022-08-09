@@ -19,6 +19,7 @@ class SongService {
             'Accept': 'application/json;charset=UTF-8',
           }));
       DeezerSongModel result = DeezerSongModel.fromJson(response.data);
+      print(result);
       return result;
     } on DioError catch (e) {
       if (e.request != null) {
